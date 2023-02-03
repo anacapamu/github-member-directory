@@ -1,15 +1,17 @@
 import './MemberCard.css';
 
-const MemberCard = () => {
+const MemberCard = (props) => {
+    const { avatarUrl, email, location, name, profileUrl, publicRepos, username } = props.member
+
     return (
     <div id="card">
-        <div><img id="avatar" src="https://avatars.githubusercontent.com/u/583231?v=4" alt="avatar"></img></div>
+        <div><img id="avatar" src={avatarUrl} alt="avatar"></img></div>
         <div>
-            <h1><a href="https://github.com/octocat">octocat</a></h1>
-            <p>Name: monalisa octocat</p> 
-            <p>Location: San Francisco</p>
-            <p>Email: octocat@github.com</p>
-            <p>Public repos: 2</p></div>
+            <h1><a href={profileUrl}>{username}</a></h1>
+            <p>Name: {name}</p> 
+            <p>Location: {location}</p>
+            <p>Email: {email}</p>
+            <p>Public repos: {publicRepos}</p></div>
     </div>)
 };
 
