@@ -1,61 +1,197 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import MembersDirectory from './components/MembersDirectory';
+import { useEffect, useState, useMemo } from 'react';
+import Header from './components/Header';
+import MemberCard from './components/MemberCard';
+import Pagination from './components/Pagination';
+
+const PageSize = 10;
 
 function App() {
-    const [membersData, setMembersData] = useState([]);
+    // const [membersData, setMembersData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
-        const listMembers = async () => {
-            return await fetch('https://api.github.com/users')
-                .then((res) => res.json())
-                .then(
-                    (result) => {
-                        return result.map((member) => {
-                            return member.login;
-                        });
-                    },
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-        };
-        listMembers().then((usernames) => {
-            const fetchMembers = async () => {
-                return Promise.all(
-                    usernames.map((username) => {
-                        return fetchMember(username);
-                    })
-                ).then((membersInfo) => {
-                    console.log(membersInfo)
-                    setMembersData(membersInfo)});
-            };
-            fetchMembers();
-        });
-    }, []);
+    const mockData = [
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+        {
+            username: 'anacapamu',
+            name: 'Nina',
+            location: 'LA',
+            email: 'hello@itsme.com',
+            publicRepos: '25',
+            avatarUrl: 'https://images.goodsmile.info/cgm/images/product/20220829/13166/104063/large/dc6725aa03a612d0e591ffd456a874f5.jpg',
+            profileUrl: 'https://github.com/anacapamu',
+        },
+        {
+            username: 'octocat',
+            name: 'monalisa octocat',
+            location: 'San Francisco',
+            email: 'octocat@github.com',
+            publicRepos: '2',
+            avatarUrl: 'https://avatars.githubusercontent.com/u/583231?v=4',
+            profileUrl: 'https://github.com/octocat',
+        },
+    ];
 
-    const fetchMember = async (username) => {
-        return await fetch(`https://api.github.com/users/${username}`)
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    return {
-                        username: result.login,
-                        name: result.name,
-                        email: result.email,
-                        avatarUrl: result.avatar_url,
-                        profileUrl: result.html_url,
-                        location: result.location,
-                        publicRepos: result.public_repos,
-                    };
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
-    };
+    // useEffect(() => {
+    //     const listMembers = async () => {
+    //         return await fetch('https://api.github.com/users')
+    //             .then((res) => res.json())
+    //             .then(
+    //                 (result) => {
+    //                     return result.map((member) => {
+    //                         return member.login;
+    //                     });
+    //                 },
+    //                 (error) => {
+    //                     console.log(error);
+    //                 }
+    //             );
+    //     };
+    //     listMembers().then((usernames) => {
+    //         const fetchMembers = async () => {
+    //             return Promise.all(
+    //                 usernames.map((username) => {
+    //                     return fetchMember(username);
+    //                 })
+    //             ).then((membersInfo) => {
+    //                 console.log(membersInfo)
+    //                 setMembersData(membersInfo)});
+    //         };
+    //         fetchMembers();
+    //     });
+    // }, []);
 
-    return <MembersDirectory members={membersData} />;
+    // const fetchMember = async (username) => {
+    //     return await fetch(`https://api.github.com/users/${username}`)
+    //         .then((res) => res.json())
+    //         .then(
+    //             (result) => {
+    //                 return {
+    //                     username: result.login,
+    //                     name: result.name,
+    //                     email: result.email,
+    //                     avatarUrl: result.avatar_url,
+    //                     profileUrl: result.html_url,
+    //                     location: result.location,
+    //                     publicRepos: result.public_repos,
+    //                 };
+    //             },
+    //             (error) => {
+    //                 console.log(error);
+    //             }
+    //         );
+    // };
+
+    const currentMembersData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return mockData.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage]);
+
+    return (
+        <div>
+            <Header />
+            <div>
+                {currentMembersData.map((memberData, index) => {
+                    return <MemberCard member={memberData} key={index} />;
+                })}
+                <Pagination
+                    currentPage={currentPage}
+                    totalItems={mockData.length}
+                    pageSize={PageSize}
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
+            </div>
+        </div>
+    );
 }
 
 export default App;
