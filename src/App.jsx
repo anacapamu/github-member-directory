@@ -3,7 +3,27 @@ import './App.css';
 import MemberCard from './components/MemberCard';
 
 function App() {
+    const [usernames, setUsernames] = useState([]);
     const [membersData, setMembersData] = useState([]);
+
+    useEffect(() => {
+        const listMembers = () => {
+        fetch("https://api.github.com/users")
+          .then((res) => res.json())
+          .then(
+            (result) => {
+                console.log(result);
+                const logins = []
+                result.forEach(member => logins.push(member.login))
+                setUsernames(logins)
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
+        listMembers();
+      }, []);
 
     useEffect(() => {
         const getMember = () => {
@@ -30,6 +50,7 @@ function App() {
         getMember();
       }, []);
     
+    console.log(usernames)
     return <MemberCard member={membersData}/>
 }
 
