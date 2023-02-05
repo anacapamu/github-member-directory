@@ -7,11 +7,19 @@ GitHub Member Directory is a web app that pulls and displays GitHub user informa
 To run the web app locally:
 
 1. Clone the repo
-2. Install vite
+2. cd into repo
+    ```bash
+    cd github-member-directory
+    ```
+3. Install all dependencies
+    ```bash
+    yarn install
+    ```
+    or install Vite only
     ```bash
     yarn add vite
     ```
-3. Run app
+4. Run app
     ```bash
     yarn dev
     ```
