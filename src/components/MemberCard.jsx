@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { isNull } from '../helpers/isNull';
 
 const MemberCard = (props) => {
-    const memberInfo = isNull(props.member)
+    const memberInfo = isNull(props.member);
 
     const {
         avatarUrl,
@@ -35,18 +35,18 @@ const MemberCard = (props) => {
     const CardHeader = styled.span`
         font-weight: bold;
         color: #f2c4ce;
-    `
+    `;
 
     const Avatar = styled.img`
         width: 200px;
         height: 200px;
-        `
+    `;
 
     const ProfileLink = styled.a`
         color: #f58f7c;
         font-size: xx-large;
         font-weight: bold;
-    `
+    `;
 
     return (
         <CardContainer>

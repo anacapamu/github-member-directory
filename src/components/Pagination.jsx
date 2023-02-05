@@ -39,29 +39,20 @@ const Pagination = (props) => {
         list-style-type: none;
     `;
 
-    const LeftArrow = styled.div`
+    const Arrow = styled.div`
         border: solid;
         border-width: 0 2px 2px 0;
         display: inline-block;
         padding: 3px;
-        transform: rotate(135deg);
-        -webkit-transform: rotate(135deg);
-    `;
-
-    const RightArrow = styled.div`
-        border: solid;
-        border-width: 0 2px 2px 0;
-        display: inline-block;
-        padding: 3px;
-        transform: rotate(-45deg);
-        -webkit-transform: rotate(-45deg);
+        transform: ${props => props.left? "rotate(135deg)": "rotate(-45deg)"};
+        -webkit-transform: ${props => props.left? "rotate(135deg)": "rotate(-45deg)"}
     `;
 
     return (
         <PaginationContainer>
             {currentPage !== 1 ? (
                 <li onClick={onPrevious}>
-                    <LeftArrow />
+                    <Arrow left/>
                 </li>
             ) : (
                 ''
@@ -82,7 +73,7 @@ const Pagination = (props) => {
             })}
             {currentPage !== lastPage ? (
                 <li onClick={onNext}>
-                    <RightArrow />
+                    <Arrow />
                 </li>
             ) : (
                 ''
