@@ -2,6 +2,8 @@
 
 GitHub Member Directory is a web app that pulls and displays GitHub user information in cards.
 
+![screenshot](screenshot.png)
+
 ## Installation
 
 To run the web app locally:

@@ -14,6 +14,7 @@ const MainContainer = styled.div`
 const CardsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
+    place-content: center;
     gap: 20px;
 `;
 
