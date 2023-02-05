@@ -23,9 +23,11 @@ To run the web app locally:
 * Vite
 * ESLint
 * Prettier
+* Styled Components
 
 ## Additional Features
 
 If I had more time, I would add:
 
 * Unit tests
+* Better UX design

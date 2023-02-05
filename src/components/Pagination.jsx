@@ -1,4 +1,6 @@
+import styled from 'styled-components';
 import { usePagination } from '../hooks/usePagination.js';
+import './Pagination.css';
 
 const Pagination = (props) => {
     const {
@@ -6,7 +8,7 @@ const Pagination = (props) => {
         totalItems,
         neighborCount = 1,
         currentPage,
-        pageSize
+        pageSize,
     } = props;
 
     const paginationRange = usePagination({
@@ -16,7 +18,6 @@ const Pagination = (props) => {
         pageSize,
     });
 
-    // If there are less than 2 times in pagination range we shall not render the component
     if (currentPage === 0 || paginationRange.length < 2) {
         return null;
     }
@@ -31,30 +32,62 @@ const Pagination = (props) => {
 
     let lastPage = paginationRange[paginationRange.length - 1];
 
-    return (
-        <ul>
-            {/* Left navigation arrow */}
-            <li onClick={onPrevious} disabled={currentPage === 1}>
-                <div className="arrow left" />
-            </li>
-            {paginationRange.map((pageNumber, index) => {
-                // If the pageItem is a DOT, render the DOTS unicode character
-                if (pageNumber === '...') {
-                    return <li className="pagination-item dots">&#8230;</li>;
-                }
+    const PaginationContainer = styled.ul`
+        display: flex;
+        place-content: center;
+        gap: 20px;
+        list-style-type: none;
+    `;
 
-                // Render our Page Pills
+    const LeftArrow = styled.div`
+        border: solid;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 3px;
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    `;
+
+    const RightArrow = styled.div`
+        border: solid;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 3px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    `;
+
+    return (
+        <PaginationContainer>
+            {currentPage !== 1 ? (
+                <li onClick={onPrevious}>
+                    <LeftArrow />
+                </li>
+            ) : (
+                ''
+            )}
+            {paginationRange.map((pageNumber, index) => {
+                if (pageNumber === '...') {
+                    return <li>&#8230;</li>;
+                }
                 return (
-                    <li onClick={() => onPageChange(pageNumber)} key={index}>
+                    <li
+                        onClick={() => onPageChange(pageNumber)}
+                        key={index}
+                        className={pageNumber === currentPage ? 'selected' : ''}
+                    >
                         {pageNumber}
                     </li>
                 );
             })}
-            {/*  Right Navigation arrow */}
-            <li onClick={onNext} disabled ={currentPage === lastPage}>
-                <div className="arrow right" />
-            </li>
-        </ul>
+            {currentPage !== lastPage ? (
+                <li onClick={onNext}>
+                    <RightArrow />
+                </li>
+            ) : (
+                ''
+            )}
+        </PaginationContainer>
     );
 };
 

@@ -1,8 +1,11 @@
-const Header = () => {
+import styled from 'styled-components';
 
-    return (
-        <h1>GitHub Member Directory</h1>
-    );
+const Header = () => {
+    const HeaderContainer = styled.h1`
+        color: #f2c4ce;
+    `;
+
+    return <HeaderContainer>GitHub Member Directory</HeaderContainer>;
 };
 
 export default Header;

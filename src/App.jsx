@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import styled from 'styled-components';
 import Header from './components/Header';
 import MemberCard from './components/MemberCard';
 import Pagination from './components/Pagination';
@@ -9,10 +10,10 @@ function App() {
     // const [membersData, setMembersData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const mockData = [
+    const membersData = [
         {
             username: 'octocat',
-            name: 'monalisa octocat',
+            name: null,
             location: 'San Francisco',
             email: 'octocat@github.com',
             publicRepos: '2',
@@ -106,7 +107,8 @@ function App() {
             location: 'LA',
             email: 'hello@itsme.com',
             publicRepos: '25',
-            avatarUrl: 'https://images.goodsmile.info/cgm/images/product/20220829/13166/104063/large/dc6725aa03a612d0e591ffd456a874f5.jpg',
+            avatarUrl:
+                'https://images.goodsmile.info/cgm/images/product/20220829/13166/104063/large/dc6725aa03a612d0e591ffd456a874f5.jpg',
             profileUrl: 'https://github.com/anacapamu',
         },
         {
@@ -142,8 +144,8 @@ function App() {
     //                     return fetchMember(username);
     //                 })
     //             ).then((membersInfo) => {
-    //                 console.log(membersInfo)
-    //                 setMembersData(membersInfo)});
+    //                 setMembersData(membersInfo);
+    //             });
     //         };
     //         fetchMembers();
     //     });
@@ -170,27 +172,40 @@ function App() {
     //         );
     // };
 
+    const MainContainer = styled.div`
+        display: flex;
+        flex-direction: column;
+        place-content: center;
+        text-align: center;
+    `;
+
+    const CardsContainer = styled.div`
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    `;
+
     const currentMembersData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
-        return mockData.slice(firstPageIndex, lastPageIndex);
+        return membersData.slice(firstPageIndex, lastPageIndex);
     }, [currentPage]);
 
     return (
-        <div>
+        <MainContainer>
             <Header />
-            <div>
+            <CardsContainer>
                 {currentMembersData.map((memberData, index) => {
                     return <MemberCard member={memberData} key={index} />;
                 })}
-                <Pagination
-                    currentPage={currentPage}
-                    totalItems={mockData.length}
-                    pageSize={PageSize}
-                    onPageChange={(page) => setCurrentPage(page)}
-                />
-            </div>
-        </div>
+            </CardsContainer>
+            <Pagination
+                currentPage={currentPage}
+                totalItems={membersData.length}
+                pageSize={PageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+            />
+        </MainContainer>
     );
 }
 
