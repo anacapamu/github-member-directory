@@ -1,6 +1,9 @@
 import styled from 'styled-components';
+import { isNull } from '../helpers/isNull';
 
 const MemberCard = (props) => {
+    const memberInfo = isNull(props.member)
+
     const {
         avatarUrl,
         email,
@@ -9,7 +12,7 @@ const MemberCard = (props) => {
         profileUrl,
         publicRepos,
         username,
-    } = props.member;
+    } = memberInfo;
 
     const CardContainer = styled.div`
         display: flex;
@@ -22,7 +25,11 @@ const MemberCard = (props) => {
     `;
 
     const CardText = styled.p`
-        white-space: pre-wrap;
+        white-space: nowrap;
+        max-width: 200px;
+        text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
     `;
 
     const CardHeader = styled.span`
@@ -31,8 +38,8 @@ const MemberCard = (props) => {
     `
 
     const Avatar = styled.img`
-        max-width: 200px;
-        max-height: 200px;
+        width: 200px;
+        height: 200px;
         `
 
     const ProfileLink = styled.a`
@@ -47,11 +54,11 @@ const MemberCard = (props) => {
             <ProfileLink href={profileUrl}>{username}</ProfileLink>
             <CardText>
                 <CardHeader>Name:</CardHeader> {name}
-                {'\n'}
+                <br />
                 <CardHeader>Location:</CardHeader> {location}
-                {'\n'}
+                <br />
                 <CardHeader>Email:</CardHeader> {email}
-                {'\n'}
+                <br />
                 <CardHeader>Public repos:</CardHeader> {publicRepos}
             </CardText>
         </CardContainer>
