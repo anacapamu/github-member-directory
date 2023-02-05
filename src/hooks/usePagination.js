@@ -10,7 +10,7 @@ export const usePagination = ({
     const paginationRange = useMemo(() => {
         const totalPages = Math.ceil(totalItems / pageSize);
 
-        // Pages count = siblingCount + firstPage + lastPage + currentPage + 2*DOTS
+        // How many pages to show = siblingCount + firstPage + lastPage + currentPage + 2*DOTS
         const totalPageNumbers = neighborCount + 5;
 
         const DOTS = '...';
@@ -35,10 +35,10 @@ export const usePagination = ({
 
         /*
         Don't show dots when there is just one page number to be inserted between
-        the extremes of neighbors and the page limits i.e 1 and totalPages
+        the extremes of neighbors and the page limits
       */
         const showLeftDots = leftNeighborIndex > 2;
-        const shouldShowRightDots = rightNeighborIndex < totalPages - 2;
+        const showRightDots = rightNeighborIndex < totalPages - 2;
 
         const firstPageIndex = 1;
         const lastPageIndex = totalPages;
@@ -46,7 +46,7 @@ export const usePagination = ({
         /*
           Case 2: No left dots to show, but rights dots to be shown
       */
-        if (!showLeftDots && shouldShowRightDots) {
+        if (!showLeftDots && showRightDots) {
             let leftItemCount = 3 + 2 * neighborCount;
             let leftRange = range(1, leftItemCount);
 
@@ -56,7 +56,7 @@ export const usePagination = ({
         /*
           Case 3: No right dots to show, but left dots to be shown
       */
-        if (showLeftDots && !shouldShowRightDots) {
+        if (showLeftDots && !showRightDots) {
             let rightItemCount = 3 + 2 * neighborCount;
             let rightRange = range(totalPages - rightItemCount + 1, totalPages);
             return [firstPageIndex, DOTS, ...rightRange];
@@ -65,7 +65,7 @@ export const usePagination = ({
         /*
           Case 4: Both left and right dots to be shown
       */
-        if (showLeftDots && shouldShowRightDots) {
+        if (showLeftDots && showRightDots) {
             let middleRange = range(leftNeighborIndex, rightNeighborIndex);
             return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
         }

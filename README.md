@@ -35,6 +35,7 @@ If I had more time, I would add:
 * Unit tests
 * Better UX design
 * Cache the logins and/or member datas pulled
+* Pagination includes buttons that goes straight to first or last page
 * User ability to retrieve a certain amount of users
 * Deployment to GitHub pages
 
