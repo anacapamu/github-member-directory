@@ -1,10 +1,21 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from './components/Header';
 import MemberCard from './components/MemberCard';
 import Pagination from './components/Pagination';
 
-const PageSize = 10;
+const MainContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    text-align: center;
+`;
+
+const CardsContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+`;
 
 function App() {
     const [membersData, setMembersData] = useState([]);
@@ -172,25 +183,10 @@ function App() {
             );
     };
 
-    const MainContainer = styled.div`
-        display: flex;
-        flex-direction: column;
-        place-content: center;
-        text-align: center;
-    `;
-
-    const CardsContainer = styled.div`
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    `;
-
-    const currentMembersData = useMemo(() => {
-        const firstPageIndex = (currentPage - 1) * PageSize;
-        const lastPageIndex = firstPageIndex + PageSize;
-        return membersData.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage]);
-
+    const PageSize = 10;
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    const currentMembersData = membersData.slice(firstPageIndex, lastPageIndex);
 
     return (
         <MainContainer>

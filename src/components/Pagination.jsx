@@ -2,6 +2,23 @@ import styled from 'styled-components';
 import { usePagination } from '../hooks/usePagination.js';
 import './Pagination.css';
 
+const PaginationContainer = styled.ul`
+    display: flex;
+    place-content: center;
+    gap: 20px;
+    list-style-type: none;
+`;
+
+const Arrow = styled.div`
+    border: solid;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: ${(props) => (props.left ? 'rotate(135deg)' : 'rotate(-45deg)')};
+    -webkit-transform: ${(props) =>
+        props.left ? 'rotate(135deg)' : 'rotate(-45deg)'};
+`;
+
 const Pagination = (props) => {
     const {
         onPageChange,
@@ -32,27 +49,11 @@ const Pagination = (props) => {
 
     let lastPage = paginationRange[paginationRange.length - 1];
 
-    const PaginationContainer = styled.ul`
-        display: flex;
-        place-content: center;
-        gap: 20px;
-        list-style-type: none;
-    `;
-
-    const Arrow = styled.div`
-        border: solid;
-        border-width: 0 2px 2px 0;
-        display: inline-block;
-        padding: 3px;
-        transform: ${props => props.left? "rotate(135deg)": "rotate(-45deg)"};
-        -webkit-transform: ${props => props.left? "rotate(135deg)": "rotate(-45deg)"}
-    `;
-
     return (
         <PaginationContainer>
             {currentPage !== 1 ? (
                 <li onClick={onPrevious}>
-                    <Arrow left/>
+                    <Arrow left />
                 </li>
             ) : (
                 ''
