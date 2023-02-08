@@ -18,6 +18,9 @@ const CardsContainer = styled.div`
     gap: 20px;
 `;
 
+const NoDataContainer = styled.div`
+    text-align: center;
+`;
 function App() {
     const [membersData, setMembersData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -71,6 +74,10 @@ function App() {
                 }
             );
     };
+
+    if (membersData.length === 0) {
+        return <NoDataContainer>No member data to display.</NoDataContainer>;
+    }
 
     const PageSize = 10;
     const firstPageIndex = (currentPage - 1) * PageSize;
