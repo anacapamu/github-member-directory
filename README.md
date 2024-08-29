@@ -37,7 +37,6 @@ To run the web app locally:
 * ESLint
 * Prettier
 * Styled Components
-* GH Pages
 
 ## Additional Features
 
