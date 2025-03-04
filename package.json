@@ -21,12 +21,12 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.9.1",
+    "eslint": "^9.21.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.35.0",
     "prettier": "^2.8.3",
-    "styled-components": "^6.1.12",
-    "vite": "5.4.6"
+    "styled-components": "^6.1.15",
+    "vite": "^6.2.0"
   }
 }
